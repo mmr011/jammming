@@ -23,8 +23,9 @@ const Spotify = {
         }        
     },
 
-    search() {
-        fetch(`https://api.spotify.com/v1/search?type=track&q=${this.state.term}`, {
+    search(term) {
+        const accessToken = Spotify.getAccessToken();
+        fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
             headers: {Authorization: `Bearer ${accessToken}`}
         }).then(response => {
             return response.json();
@@ -39,8 +40,27 @@ const Spotify = {
                         uri: track.uri
                     }
                 })
+            } else {
+                return [];
             }
         })
+    },
+
+    savePlaylist(playlistName, trackUri) {
+        if (!playlistName || !trackUri) {
+            return;
+        } else {
+            const accessToken = Spotify.getAccessToken();
+            const headers = { Authorization: `Bearer ${accessToken}`} ;
+            let userId ;
+            fetch('https://api.spotify.com/v1/me', {
+                headers: headers
+            }).then(response => {
+                return response.json();
+            }).then(jsonResponse => {
+                return userId = jsonResponse.id;
+            })
+        }
     }
 };
 
