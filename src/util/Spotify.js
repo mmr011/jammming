@@ -1,6 +1,6 @@
 let accessToken; 
 const clientId = '';
-const redirectUri = 'http://localhost:3000/';
+const redirectUri = 'http://jam-seracher.surge.sh';
 
 const Spotify = {
     getAccessToken() {
